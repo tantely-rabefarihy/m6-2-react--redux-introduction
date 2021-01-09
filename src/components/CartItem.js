@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Icon } from "react-icons-kit";
 import { close } from "react-icons-kit/fa/close";
-import { removeItem } from "../../src/actions";
+import { removeItem, updateQuantity } from "../../src/actions";
 import { useDispatch } from "react-redux";
 
 export const CartItem = ({ id, price, quantity, title }) => {
@@ -12,7 +12,14 @@ export const CartItem = ({ id, price, quantity, title }) => {
     <Wrapper>
       <Item>{title}</Item>
       <Quantity>
-        Quantity : <Input type="text" value={quantity} onChange={quantity} />
+        Quantity :{" "}
+        <Input
+          type="text"
+          value={quantity}
+          onChange={(e) => {
+            dispatch(updateQuantity({ quantity: e.target.value, id }));
+          }}
+        />
       </Quantity>
       <Icon
         icon={close}

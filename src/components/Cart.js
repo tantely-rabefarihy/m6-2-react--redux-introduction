@@ -7,14 +7,14 @@ import { getStoreItemArray, getTotal } from "../reducers/index";
 export const Cart = () => {
   const storeItems = useSelector(getStoreItemArray);
   const cartTotal = useSelector(getTotal);
-
-  console.log(storeItems);
+  const numOfItems = storeItems.length;
+  // console.log(storeItems);
 
   return (
     <Wrapper>
       <CartDetails>
         <Title>Your Cart</Title>
-        <div>0 Item</div>
+        <div>{numOfItems} Item(s)</div>
 
         {storeItems.map((item, index) => {
           return (
@@ -51,23 +51,24 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 const CartDetails = styled.div`
-  max-height: calc(100vh - 240px);
+  max-height: calc(100vh - 100px);
   overflow: auto;
   padding-left: 32px;
   padding-right: 32px;
 `;
 const Total = styled.div`
   position: absolute;
-  bottom: 50px;
+  bottom: 40px;
   left: 32px;
 `;
 
 const Title = styled.h2``;
 
 const Footer = styled.div``;
+
 const Purchase = styled.button`
   position: absolute;
-  bottom: 50px;
+  bottom: 40px;
   right: 20px;
   width: 100px;
   border-radius: 12px;

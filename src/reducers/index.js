@@ -5,11 +5,14 @@ const initialState = {};
 export default function cartReducer(state = initialState, action) {
   switch (action.type) {
     case "ADD_ITEM": {
+      // console.log(state[action.item.id]);
       return {
         ...state,
         [action.item.id]: {
           ...action.item,
-          quantity: 1,
+          quantity: state[action.item.id]
+            ? ++state[action.item.id].quantity
+            : 1,
         },
       };
     }
@@ -19,6 +22,15 @@ export default function cartReducer(state = initialState, action) {
       {
         return stateCopy;
       }
+    }
+    case "UPDATE_QUANTITY": {
+      return {
+        ...state,
+        [action.item.id]: {
+          ...state[action.item.id],
+          quantity: action.item.quantity,
+        },
+      };
     }
 
     default:
@@ -31,7 +43,7 @@ export const getStoreItemArray = (state) => Object.values(state);
 export const getTotal = (state) => {
   let count = 0;
   Object.values(state).forEach((item) => {
-    if (item.quantity <= 0) {
+    if (item.quantity < 0) {
       return alert("Please Enter a valid quantity");
     } else {
       count += item?.price * item?.quantity;
