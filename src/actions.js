@@ -1,5 +1,3 @@
-import React from "react";
-
 export const addItem = (item) => ({
   type: "ADD_ITEM",
   item,
@@ -12,5 +10,10 @@ export const removeItem = (item) => ({
 
 export const updateQuantity = (item) => ({
   type: "UPDATE_QUANTITY",
+  item,
+});
+
+export const clearCart = (item) => ({
+  type: "CLEAR_CART",
   item,
 });

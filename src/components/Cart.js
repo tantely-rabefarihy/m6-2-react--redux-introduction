@@ -1,19 +1,32 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { CartItem } from "./CartItem";
 import { getStoreItemArray, getTotal } from "../reducers/index";
+import { clearCart } from "../actions";
 
 export const Cart = () => {
+  const dispatch = useDispatch();
+  const [disabled, setDisabled] = useState(true);
   const storeItems = useSelector(getStoreItemArray);
   const cartTotal = useSelector(getTotal);
   const numOfItems = storeItems.length;
-  // console.log(storeItems);
+
+  useEffect(() => {
+    numOfItems > 0 ? setDisabled(false) : setDisabled(true);
+  }, [numOfItems]);
 
   return (
     <Wrapper>
       <CartDetails>
         <Title>Your Cart</Title>
+        <Clear
+          disabled={disabled}
+          type="button"
+          onClick={() => dispatch(clearCart())}
+        >
+          Clear Cart
+        </Clear>
         <div>{numOfItems} Item(s)</div>
 
         {storeItems.map((item, index) => {
@@ -30,7 +43,9 @@ export const Cart = () => {
       </CartDetails>
       <Footer>
         <Total>Total: {cartTotal} $ </Total>
-        <Purchase>Purchase </Purchase>
+        <Purchase onClick={() => alert("THANK YOU FOR YOUR PURCHASE 🥳 !")}>
+          Purchase{" "}
+        </Purchase>
       </Footer>
     </Wrapper>
   );
@@ -56,6 +71,7 @@ const CartDetails = styled.div`
   padding-left: 32px;
   padding-right: 32px;
 `;
+
 const Total = styled.div`
   position: absolute;
   bottom: 40px;
@@ -79,4 +95,23 @@ const Purchase = styled.button`
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
+`;
+
+const Clear = styled.button`
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  width: 80px;
+  border-radius: 10px;
+  background-color: rgb(255, 64, 110);
+  color: white;
+  border: none;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: grey;
+  }
 `;

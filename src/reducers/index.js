@@ -1,5 +1,3 @@
-import React from "react";
-
 const initialState = {};
 
 export default function cartReducer(state = initialState, action) {
@@ -19,9 +17,7 @@ export default function cartReducer(state = initialState, action) {
     case "REMOVE_ITEM": {
       const stateCopy = { ...state };
       delete stateCopy[action.item.id];
-      {
-        return stateCopy;
-      }
+      return stateCopy;
     }
     case "UPDATE_QUANTITY": {
       return {
@@ -31,6 +27,9 @@ export default function cartReducer(state = initialState, action) {
           quantity: action.item.quantity,
         },
       };
+    }
+    case "CLEAR_CART": {
+      return "";
     }
 
     default:
